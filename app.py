@@ -36,7 +36,7 @@ def sample():
 def evaluation(id):
     entry = database.get_entry(id)
     if entry is None:
-        abort(404)
+        return {}
     else:
         return analysis.evaluation(entry.dataframe, id)
          
@@ -46,7 +46,7 @@ def evaluation(id):
 def dataframe(id):
     entry = database.get_entry(id)
     if entry is None:
-        abort(404)
+        return {}
     else:
         return json.loads(entry.dataframe)
 
@@ -56,7 +56,7 @@ def mentions_of(id):
     request_data = request.get_json()
     entry = database.get_entry(id)
     if entry is None:
-        abort(404)
+        return {}
     else:
         return analysis.mentions_of(entry.dataframe, request_data["keywords"])
         # return analysis.mentions_of(entry.dataframe, keyword)

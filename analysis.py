@@ -83,7 +83,7 @@ def evaluation(json_str, key):
         
     all_keywords_list = [(kw, info) for kw, info in all_keywords.items()]
     all_keywords_list.sort(reverse=True, key=lambda keyword: len(keyword[1][1]))
-    print(all_keywords_list)
+    # print(all_keywords_list)
 
     top10Overall = []
     top10Positive = []

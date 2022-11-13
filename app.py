@@ -40,6 +40,16 @@ def dataframe(id):
     else:
         return json.loads(entry.dataframe)
 
+@app.route("/product/<uuid:id>/mentions_of", methods=["POST"])
+def mentions_of(id):
+    request_data = request.get_json()
+    entry = database.get_entry(id)
+    if entry is None:
+        abort(404)
+    else:
+        return analysis.mentions_of(entry.dataframe, request_data["keywords"])
+        # return analysis.mentions_of(entry.dataframe, keyword)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=environ["PORT"])

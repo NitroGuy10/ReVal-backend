@@ -2,6 +2,7 @@ import pandas as pd
 from summa import keywords
 from sentiment import get_sentiment
 from io import StringIO
+from nltk.stem import PorterStemmer
 
 
 def create_product_df (json_str):    
@@ -39,3 +40,15 @@ def create_product_df (json_str):
 def create_product_df_json (json_str):
     df = create_product_df(json_str)
     return df.to_json(orient='index')
+
+def mentions_of (json_str, keywords):    
+    print("BINGUS!!!!!")
+    # df = pd.read_json('input/data/by_product/140053271X.json', orient="records", encoding = 'UTF-8')
+    df = pd.read_json(json_str, orient="index", encoding='UTF-8')
+
+    tempView = df
+    for keyword in keywords:
+        tempView = tempView[df.reviewText.str.contains(keyword)]
+
+    return list(tempView.index)
+

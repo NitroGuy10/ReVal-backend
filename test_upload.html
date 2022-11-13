@@ -8,7 +8,20 @@
 </head>
 <body>
     <button onclick="upload()">upload</button>
+    <button onclick="mo()">mentions of</button>
     <script>
+        async function mo ()
+        {
+            const keywords = ["instructions", "and"]
+            const response = await fetch("http://127.0.0.1:5000/product/cd158e34-1b08-4660-bdb0-2c2f2dc28643/mentions_of", {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"keywords": keywords})
+              });
+            console.log(await response.json())
+        }
         async function upload()
         {
             const data = `[
@@ -30,7 +43,7 @@
             ,{"overall": 4.0, "verified": true, "reviewTime": "05 14, 2013", "reviewerID": "A1KG7AMPBE36TD", "asin": "B00005118M", "style": {"Length:": " 25 Feet/7.62 Meters"}, "reviewerName": "Julie &amp; Doug", "reviewText": "Not much fancy here just a cable that was long enough so that we could relocate our HP laser printer.  It did exactly what we needed it to do.  That makes me a happy buyer :)", "summary": "Works as it should", "unixReviewTime": 1368489600}
             ,{"overall": 5.0, "verified": true, "reviewTime": "12 3, 2012", "reviewerID": "A2X6OZGYSEICPA", "asin": "B00005118M", "reviewerName": "Kevin H. Hobbes", "reviewText": "It is a parallel printer cable and it works exactly like it is supposed to. There were no problems with it.", "summary": "It is a cable", "unixReviewTime": 1354492800}
             ]`
-            const response = await fetch("http://127.0.0.1:5000/create", {
+            const response = await fetch("http://reval-backend.herokuapp.com/create", {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'

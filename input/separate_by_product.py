@@ -17,7 +17,14 @@ products = set()
 
 with open(INPUT_FILE) as in_file:
     for line in in_file:
+        try:
+            line.encode("ascii")
+        except UnicodeEncodeError:
+            print("bad encoding")
+            continue
+
         review = json.loads(line)
+
         if "asin" in review:
             with open(os.path.join(OUTPUT_DIRECTORY, review["asin"] + ".json"), "a") as out_file:
                 if ONE_JSON_OBJECT:

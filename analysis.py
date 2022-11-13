@@ -3,6 +3,7 @@ from summa import keywords
 from sentiment import get_sentiment
 from io import StringIO
 from nltk.stem import PorterStemmer
+from nltk import word_tokenize
 import json
 
 
@@ -47,18 +48,23 @@ def mentions_of (json_str, keywords):
     # df = pd.read_json('input/data/by_product/140053271X.json', orient="records", encoding = 'UTF-8')
     df = pd.read_json(json_str, orient="index", encoding='UTF-8')
 
+    ps = PorterStemmer()
+    df["reviewTextStemmed"] = df["reviewText"].map(lambda text: " ".join([ps.stem(word.lower()) for word in word_tokenize(text)]))
+    #print(df["reviewTextStemmed"].head())
+
     tempView = df
     for keyword in keywords:
-        tempView = tempView[df.reviewText.str.contains(keyword)]
-    
-    # TODO related stem words
+        keyword_stemmed = ps.stem(keyword)
+        tempView = tempView[df.reviewText.str.contains(keyword) | df.reviewText.str.contains(keyword_stemmed) | df.reviewTextStemmed.str.contains(keyword_stemmed)]
 
     return json.loads(tempView.to_json(orient='records'))
 
 def evaluation(json_str, key):
     df = pd.read_json(json_str, orient="index", encoding='UTF-8')
+    ps = PorterStemmer()
 
     all_keywords = {}
+    # keyword_stems = {}
     for i in range(len(df["summaKeyWords"].index)):
         keywords_list = df["summaKeyWords"][i]
 
@@ -67,6 +73,9 @@ def evaluation(json_str, key):
 
         if type(keywords_list) == list:
             for keyword in keywords_list:
+                # if keyword not in keyword_stems:
+                #     keyword_stems[keyword] = ps.stem(keyword)
+
                 if keyword in all_keywords:
                     all_keywords[keyword][1].append(df["index"][i])
                 else:

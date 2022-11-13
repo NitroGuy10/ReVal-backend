@@ -4,14 +4,15 @@ from sentiment import get_sentiment
 from io import StringIO
 
 
-def create_product_df (json_str):
-    df = pd.read_json('input/data/by_product/140053271X.json', lines = True, encoding = 'UTF-8')
-    # df = None
-    # with StringIO(json_str) as in_str:
-    #     df = pd.read_json(in_str, lines = True, encoding = 'UTF-8')
+def create_product_df (json_str):    
+    # df = pd.read_json('input/data/by_product/140053271X.json', orient="records", encoding = 'UTF-8')
+    df = pd.read_json(json_str, orient="records", encoding='UTF-8')
+    print(df.head())
+    print(df.columns)
 
     df = df.drop('reviewTime', axis = 1)
-    df = df.drop('image', axis = 1)
+    if "image" in df.columns:
+        df = df.drop('image', axis = 1)
     df = df.drop('verified', axis = 1)
     df = df.drop('reviewerID', axis = 1)
     df["index"] = range(len(df.index))

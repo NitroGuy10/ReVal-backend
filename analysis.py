@@ -1,12 +1,14 @@
 import pandas as pd
 from summa import keywords
 from sentiment import get_sentiment
-
+from io import StringIO
 
 
 def create_product_df (json_str):
-    # df = pd.read_json('input/data/by_product/140053271X.json', lines = True, encoding = 'UTF-8')
-    df = pd.read_json(json_str, lines = True, encoding = 'UTF-8')
+    df = pd.read_json('input/data/by_product/140053271X.json', lines = True, encoding = 'UTF-8')
+    # df = None
+    # with StringIO(json_str) as in_str:
+    #     df = pd.read_json(in_str, lines = True, encoding = 'UTF-8')
 
     df = df.drop('reviewTime', axis = 1)
     df = df.drop('image', axis = 1)

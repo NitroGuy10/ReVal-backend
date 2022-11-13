@@ -6,7 +6,7 @@ from database_orm import Base, Product
 from sqlalchemy.orm import Session
 import uuid
 
-engine = sqlalchemy.create_engine(environ['DATABASE_URL'], echo=True)
+engine = sqlalchemy.create_engine(environ['DATABASE_URL_POSTGRESQL'], echo=True)
 Base.metadata.create_all(engine)
 
 def add_entry(dataframe_json):

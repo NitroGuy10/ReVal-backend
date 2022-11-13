@@ -40,6 +40,16 @@ def dataframe(id):
     else:
         return json.loads(entry.dataframe)
 
+# @app.route("/product/sample/mentions_of", methods=["POST", "GET"])
+# def mentions_of_sample():
+#     request_data = request.get_json()
+#     sample_json_str = None
+#     with open("sample_data_point.json") as in_file:
+#         sample_json_str = in_file.read()
+#     df_json = analysis.create_product_df_json(sample_json_str)
+#     return analysis.mentions_of(df_json, request_data["keywords"])
+
+
 @app.route("/product/<uuid:id>/mentions_of", methods=["POST"])
 def mentions_of(id):
     request_data = request.get_json()

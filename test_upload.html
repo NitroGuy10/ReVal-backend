@@ -12,8 +12,10 @@
     <script>
         async function mo ()
         {
-            const keywords = ["instructions", "and"]
+            const keywords = ["and"]
+            // cd158e34-1b08-4660-bdb0-2c2f2dc28643
             const response = await fetch("http://127.0.0.1:5000/product/cd158e34-1b08-4660-bdb0-2c2f2dc28643/mentions_of", {
+            //const response = await fetch("http://reval-backend.herokuapp.com/product/3eb43386-205d-427d-b613-5ef585bd3660/mentions_of", {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'

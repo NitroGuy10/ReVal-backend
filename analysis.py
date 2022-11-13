@@ -3,6 +3,7 @@ from summa import keywords
 from sentiment import get_sentiment
 from io import StringIO
 from nltk.stem import PorterStemmer
+import json
 
 
 def create_product_df (json_str):    
@@ -50,5 +51,5 @@ def mentions_of (json_str, keywords):
     for keyword in keywords:
         tempView = tempView[df.reviewText.str.contains(keyword)]
 
-    return list(tempView.index)
+    return json.loads(tempView.to_json(orient='records'))
 

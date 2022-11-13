@@ -81,20 +81,9 @@ def mentions_of (json_str, keywords, or_search=False):
             if hits[hit] == len(keywords):
                 indices_to_include.add(hit)
 
-    # SYNONYMS!!!
-    synonym_indices = set()
-    synonym_indices_to_include = set()
-    for keyword in keywords_synonyms:
-            keyword_stemmed = ps.stem(keyword)
-            indices = df[df.reviewText.str.contains(keyword) | df.reviewText.str.contains(keyword_stemmed) | df.reviewTextStemmed.str.contains(keyword_stemmed)].index
-            for index in indices:
-                synonym_indices.add(int(index))
-    for index in synonym_indices:
-        if index not in indices_to_include:
-            synonym_indices_to_include.add(index)
 
 
-    return json.loads(df.iloc[list(indices_to_include)].to_json(orient='records')) + json.loads(df.iloc[list(synonym_indices_to_include)].to_json(orient='records'))
+    return json.loads(df.iloc[list(indices_to_include)].to_json(orient='records'))
 
 def evaluation(json_str, key):
     df = pd.read_json(json_str, orient="index", encoding='UTF-8')

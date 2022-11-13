@@ -32,22 +32,23 @@ def sample():
     with open("sample_data_point.json") as in_file:
         return json.load(in_file)
 
-@app.route("/product/<uuid:id>/")
+@app.route("/product/<uuid:id>")
+def evaluation(id):
+    entry = database.get_entry(id)
+    if entry is None:
+        abort(404)
+    else:
+        return analysis.evaluation(entry.dataframe, id)
+         
+
+
+@app.route("/product/<uuid:id>/dataframe")
 def dataframe(id):
     entry = database.get_entry(id)
     if entry is None:
         abort(404)
     else:
         return json.loads(entry.dataframe)
-
-# @app.route("/product/sample/mentions_of", methods=["POST", "GET"])
-# def mentions_of_sample():
-#     request_data = request.get_json()
-#     sample_json_str = None
-#     with open("sample_data_point.json") as in_file:
-#         sample_json_str = in_file.read()
-#     df_json = analysis.create_product_df_json(sample_json_str)
-#     return analysis.mentions_of(df_json, request_data["keywords"])
 
 
 @app.route("/product/<uuid:id>/mentions_of", methods=["POST"])

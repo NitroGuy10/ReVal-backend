@@ -1,2 +1,4 @@
 vader_lexicon
 punkt
+wordnet
+omw-1.4

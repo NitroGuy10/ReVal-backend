@@ -58,7 +58,10 @@ def mentions_of(id):
     if entry is None:
         return {}
     else:
-        return analysis.mentions_of(entry.dataframe, request_data["keywords"])
+        if "or_search" in request_data:
+            return analysis.mentions_of(entry.dataframe, request_data["keywords"], request_data["or_search"])
+        else:
+            return analysis.mentions_of(entry.dataframe, request_data["keywords"])
         # return analysis.mentions_of(entry.dataframe, keyword)
 
 
